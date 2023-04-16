@@ -1,0 +1,67 @@
+const { prefix, emotes } = require('../../config.json');
+const mlb = require('../../mlb.json');
+const Utils = require('../../utils.js');
+const Discord = require('discord.js');
+const Canvas = require('canvas');
+const CanvasTextWrapper = require('canvas-text-wrapper').CanvasTextWrapper;
+const fs = require('fs');
+const cornelius = require('cornelius');
+const util = require('util');
+
+module.exports = {
+	name: 'test',
+  alias: [],
+	description: `Testing stuff!`,
+  cooldown: 5,
+  visible: false,
+  ownerOnly: true,
+  usage: {},
+  
+	async execute(message, args) {
+    if (!args[0]) return;
+
+    if (args[0] === "searchplayer") {
+      const id = args.slice(1).join(" ");
+
+      if (Utils.getInteger(id) !== false) {
+        cornelius.player('stats', { id: `${id}` })
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => {
+            console.log(error);
+            return message.reply(`${emotes.toddYell} Hunker down! Rogue bullet! Rogue bullet!\`\`\`${error}\`\`\``);
+          });
+        
+      } else {
+        cornelius.playerSearch({ query: `${id}` })
+          .then((data) => {
+            console.log(data);
+            let returnQuery = [];
+            returnQuery = returnQuery.concat(data.search_player_all.queryResults.row);
+            const playerQuery = returnQuery.slice(0, 5);
+            console.log(playerQuery);
+            
+            let returnMsg = [];
+    
+            for (let i = 0; i < playerQuery.length; i++) {
+              const player = playerQuery[i];
+              const debutDate = new Date(player.pro_debut_date);
+              
+              const msg = `\`[${player.player_id}]\` **${player.name_display_first_last.toUpperCase()}**
+> ${mlb.logos[player.team_abbrev]} **${mlb.pos[player.position_id]}** for **${player.team_full}** (${player.league}) \`[${player.team_id}]\`
+> Pro-league Debuted: \`${debutDate.toDateString()}\``;
+    
+              returnMsg.push(msg);
+            }
+    
+            return message.reply(`${returnMsg.join("\n\n")}`);
+          })
+          .catch((error) => {
+            console.log(error);
+            return message.reply(`${emotes.toddYell} Hunker down! Rogue bullet! Rogue bullet!\`\`\`${error}\`\`\``);
+          });
+      }
+    }
+	},
+};

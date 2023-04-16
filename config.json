@@ -1,0 +1,24 @@
+{
+  "prefix": "t/",
+	"clientId": "985797230382420008",
+	"guildId": "985793444750458910",
+  "emotes": {
+    "toddSad": "<:toddSad:985806501044174859>",
+    "toddHappy": "<:toddHappy:985806499093807165>",
+    "toddAngry": "<:toddAngry:985806497416093736>",
+    "todd": "<:todd:985806494094196746>",
+    "toddAnnoyed": "<:toddAnnoyed:986679754411372544>",
+    "toddSurprised": "<:toddSurprised:986679756764348436>",
+    "toddYell": "<:toddYell:985806503074218065>"
+  },
+  "blindTypes": {
+    "protanomaly": "low amounts of red",
+    "protanopia": "no red",
+    "deuteranomaly": "low amounts of green",
+    "deuteranopia": "no green",
+    "tritanomaly": "low amounts of blue",
+    "tritanopia": "no blue",
+    "achromatomaly": "absence of most color",
+    "achromatopsia": "no color"
+  }
+}
